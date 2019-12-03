@@ -35,26 +35,49 @@ void LkList::merge(LkList& src) {
 			if (!src.hasMore()) { //Everything within src is smaller than iterator in *this
 				//Move everything from head to tail to before *this iterator
 				if (it == head) {
-
+					src.tail->next = head;
+					head->prev = tail;
+					head = src.head;
 				}
 				else {
+					Node* beforeInsert = it->prev;
+					
+					src.tail->next = it;
+					it->prev = src.tail;
 
+					beforeInsert->next = src.head;
+					src.head->prev = beforeInsert;
 				}
 				return;
 			}
 		}
 		//Everything between src head and scr pointer is smaller than *this iterator
+		Node* old_src_head = src.head;
+		src.head = src.it->next;  //Set up for the next iteration
 		if (it == head) {
+			src.it->next = head;
+			head->prev = src.it;
 
+			head = old_src_head;
 		}
 		else {
+			Node* beforeInsert = it->prev;
 
+			src.it->next = it;
+			it->prev = src.it;
+
+			beforeInsert->next = old_src_head;
+			old_src_head->prev = beforeInsert;
 		}
 		next();
 	}
 	//*This has no more nodes, meaning everything in src is bigger than *this's tail
 	//No need to check if tail is null, as head covers that possibility above
 	//Therefore, move all of src to end of *this
+	tail->next = src.head;
+	src.head->prev = tail;
+
+	tail = src.tail;
 
 	return;
 }  // end of merge function
