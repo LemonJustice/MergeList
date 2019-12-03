@@ -1,3 +1,11 @@
+// Class Name: LKString: Program 5: MergeList 
+// Author: Liam Kikuchi
+// Section: S
+// Description: Uses a ordered doubly linked list
+// and merges one into the othert in as few
+// operations as possible. This program tests
+// different cases of the merge to make sure that
+// it works.
 #include <iostream>
 #include <iomanip>
 #include "LkList.h"
